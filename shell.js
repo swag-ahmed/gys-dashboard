@@ -44,6 +44,13 @@
       return "";
     }
   };
+  const savedLang = () => {
+    try {
+      return localStorage.getItem("gys.lang") === "bn" ? "bn" : "en";
+    } catch (_) {
+      return "en";
+    }
+  };
   // Keep the dashboard sign-in here (the framed app has no lasting storage),
   // so reloads do not sign people out. Only "Sign out" or expiry clears it.
   window.addEventListener("message", (event) => {
@@ -51,7 +58,16 @@
       return;
     const type = event.data?.type;
     if (type === "gys:hello")
-      event.source.postMessage({ type: "gys:token", token: saved() }, event.origin);
+      event.source.postMessage(
+        { type: "gys:token", token: saved(), lang: savedLang() },
+        event.origin,
+      );
+    if (type === "gys:setPref") {
+      try {
+        if (event.data.lang === "bn" || event.data.lang === "en")
+          localStorage.setItem("gys.lang", event.data.lang);
+      } catch (_) {}
+    }
     if (type === "gys:setToken") {
       try {
         const t = String(event.data.token || "");
