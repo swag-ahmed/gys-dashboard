@@ -16,8 +16,11 @@
     clearTimeout(timer);
     ready = false;
     timer = setTimeout(() => {
-      hideLoading();
-      if (!ready) help.hidden = false;
+      if (!ready) {
+        loading.querySelector("p").textContent =
+          "The dashboard could not connect. Please try reloading.";
+        help.hidden = false;
+      }
     }, 18000);
   };
   window.addEventListener("message", (event) => {
@@ -36,9 +39,11 @@
       help.hidden = true;
     }
   });
-  frame.addEventListener("load", hideLoading);
+  // A Google account-routing error also fires iframe load. Only the app's
+  // trusted ready message confirms that the actual dashboard loaded.
   document.getElementById("reload").addEventListener("click", () => {
     loading.hidden = false;
+    loading.querySelector("p").textContent = "Opening your dashboard…";
     help.hidden = true;
     startTimer();
     frame.src = frame.src;
