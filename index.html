@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#172b38" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; frame-src https://script.google.com https://*.googleusercontent.com; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'"
+    />
+    <title>GYS Team Dashboard</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="shell.js" defer></script>
+  </head>
+  <body>
+    <div id="loading" role="status" aria-live="polite">
+      <span class="mark">G</span>
+      <h1>GYS Workspace</h1>
+      <p>Opening your dashboard…</p>
+    </div>
+    <iframe
+      id="dashboard"
+      title="GYS Team Dashboard"
+      src="https://script.google.com/macros/s/AKfycby560PC_xP5BuXrmuO2-7OHNdph0pXzXPtEgAADRcNRySLtyOqB8DVBlCS01vgCi1nKRA/exec"
+      allow="clipboard-write *; fullscreen *"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+    <aside id="help" hidden>
+      <span>Having trouble loading?</span
+      ><button id="reload" type="button">Reload dashboard</button
+      ><a
+        href="https://script.google.com/macros/s/AKfycby560PC_xP5BuXrmuO2-7OHNdph0pXzXPtEgAADRcNRySLtyOqB8DVBlCS01vgCi1nKRA/exec"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Open directly</a
+      ><button id="dismiss" type="button" aria-label="Dismiss loading help">
+        Dismiss
+      </button>
+    </aside>
+    <noscript>Please enable JavaScript to use the GYS dashboard.</noscript>
+  </body>
+</html>
