@@ -54,8 +54,16 @@
   // Keep the dashboard sign-in here (the framed app has no lasting storage),
   // so reloads do not sign people out. Only "Sign out" or expiry clears it.
   window.addEventListener("message", (event) => {
-    if (!isTrusted(event.origin) || event.source !== frame.contentWindow)
-      return;
+    // The app runs two frames deep (Google wraps it), so accept any window that
+    // sits inside OUR page; a separate window opened by someone else is refused.
+    const ours = (w) => {
+      try {
+        return !!w && w.top === window && w !== window;
+      } catch (_) {
+        return false;
+      }
+    };
+    if (!isTrusted(event.origin) || !ours(event.source)) return;
     const type = event.data?.type;
     if (type === "gys:hello")
       event.source.postMessage(
