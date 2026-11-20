@@ -23,6 +23,43 @@
       }
     }, 18000);
   };
+  const KEY = "gys.token";
+  const isTrusted = (origin) => {
+    try {
+      const url = new URL(origin);
+      return (
+        url.protocol === "https:" &&
+        (url.hostname === "script.google.com" ||
+          url.hostname.endsWith(".googleusercontent.com"))
+      );
+    } catch (_) {
+      return false;
+    }
+  };
+  const saved = () => {
+    try {
+      const t = localStorage.getItem(KEY) || "";
+      return /^[a-f0-9]{64}$/.test(t) ? t : "";
+    } catch (_) {
+      return "";
+    }
+  };
+  // Keep the dashboard sign-in here (the framed app has no lasting storage),
+  // so reloads do not sign people out. Only "Sign out" or expiry clears it.
+  window.addEventListener("message", (event) => {
+    if (!isTrusted(event.origin) || event.source !== frame.contentWindow)
+      return;
+    const type = event.data?.type;
+    if (type === "gys:hello")
+      event.source.postMessage({ type: "gys:token", token: saved() }, event.origin);
+    if (type === "gys:setToken") {
+      try {
+        const t = String(event.data.token || "");
+        if (/^[a-f0-9]{64}$/.test(t)) localStorage.setItem(KEY, t);
+        else localStorage.removeItem(KEY);
+      } catch (_) {}
+    }
+  });
   window.addEventListener("message", (event) => {
     let trusted = false;
     try {
