@@ -113,4 +113,9 @@
     help.hidden = true;
   });
   startTimer();
+  // Lets Chrome offer "Install app". The worker caches nothing.
+  if ("serviceWorker" in navigator)
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    });
 })();
