@@ -1,7 +1,7 @@
 {
   "name": "GYS Team Dashboard",
   "short_name": "GYS",
-  "description": "LeadsVector research tracker: what to search, who has it, what we found.",
+  "description": "Get Your System (GYS): the LeadsVector research tracker. What to search, who has it, what we found.",
   "id": "/gys-dashboard/",
   "start_url": "./",
   "scope": "./",
